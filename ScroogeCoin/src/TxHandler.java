@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class TxHandler {
     UTXOPool uPool;
     public TxHandler(UTXOPool utxoPool) {
-        UTXOPool uPool = new UTXOPool(utxoPool);
+        uPool = new UTXOPool(utxoPool);
     }
 
     /**
@@ -16,17 +16,12 @@ public class TxHandler {
      *     values; and false otherwise.
      */
     public boolean isValidTx(Transaction tx) {
-        //get the inputs
-        ArrayList<Transaction.Input> allinputs = tx.getInputs();
-
-        //for each input, check the outout is in the utxo
-        for (Transaction.Input i: allinputs) {
+        //for each input, check the output is in the utxoPool
+        for (Transaction.Input i : tx.getInputs()) {
             UTXO outputToCheck = new UTXO(i.prevTxHash, i.outputIndex);
-            uPool.contains(outputToCheck);
+            if (!uPool.contains(outputToCheck)) return false;
         }
-
-
-
+        return true;
     }
 
     /**
@@ -36,6 +31,7 @@ public class TxHandler {
      */
     public Transaction[] handleTxs(Transaction[] possibleTxs) {
         // IMPLEMENT THIS
+        return possibleTxs;
     }
 
 }
