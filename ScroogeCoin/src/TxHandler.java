@@ -55,7 +55,7 @@ public class TxHandler {
      * updating the current UTXO pool as appropriate.
      */
     public Transaction[] handleTxs(Transaction[] possibleTxs) {
-        ArrayList<Transaction> validTxs = new ArrayList<Transaction>;
+        ArrayList<Transaction> validTxs = new ArrayList<>();
         for (Transaction txiq : possibleTxs){
             if(isValidTx(txiq)){
                 validTxs.add(txiq);
