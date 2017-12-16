@@ -1,14 +1,15 @@
+import java.security.PublicKey;
 import java.util.ArrayList;
 
 public class TxHandler {
-    UTXOPool uPool;
+    UTXOPool uPool, tPool;
     public TxHandler(UTXOPool utxoPool) {
         uPool = new UTXOPool(utxoPool);
+        tPool = new UTXOPool();
     }
 
     /**
      * @return true if:
-     * (1) all outputs claimed by {@code tx} are in the current UTXO pool, 
      * (2) the signatures on each input of {@code tx} are valid, 
      * (3) no UTXO is claimed multiple times by {@code tx},
      * (4) all of {@code tx}s output values are non-negative, and
@@ -16,10 +17,34 @@ public class TxHandler {
      *     values; and false otherwise.
      */
     public boolean isValidTx(Transaction tx) {
-        //for each input, check the output is in the utxoPool
+        int numin = tx.numInputs();
+        int numout = tx.numOutputs();
+        byte[] message;
+        byte[] sig;
+        PublicKey pubkey;
+        //for each input,
         for (Transaction.Input i : tx.getInputs()) {
             UTXO outputToCheck = new UTXO(i.prevTxHash, i.outputIndex);
-            if (!uPool.contains(outputToCheck)) return false;
+
+            //check the outputs are in the utxoPool
+            if (!uPool.contains(outputToCheck)) {
+                return false;
+            } else {
+                if (tPool.contains(outputToCheck)) {
+                    return false;
+                } else {
+                    tPool.addUTXO(outputToCheck, uPool.getTxOutput(outputToCheck));
+                }
+            }
+
+            // verify sig
+            if (i.outputIndex < numin) {
+                message = tx.getRawTx();
+                sig = tx.getInput(i.outputIndex).signature;
+                pubkey = uPool.getTxOutput(outputToCheck).address;
+                if (!Crypto.verifySignature(pubkey, message, sig)) return false;
+            }
+
         }
         return true;
     }
@@ -30,8 +55,15 @@ public class TxHandler {
      * updating the current UTXO pool as appropriate.
      */
     public Transaction[] handleTxs(Transaction[] possibleTxs) {
-        // IMPLEMENT THIS
-        return possibleTxs;
+        ArrayList<Transaction> validTxs = new ArrayList<Transaction>;
+        for (Transaction txiq : possibleTxs){
+            if(isValidTx(txiq)){
+                validTxs.add(txiq);
+            }
+        }
+        Transaction [] validTxar = new Transaction [validTxs.size()];
+        validTxar = validTxs.toArray(validTxar);
+        return validTxar;
     }
 
 }
