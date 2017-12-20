@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1f50fc7c-ca71-44bf-89ee-33e9f755fc4e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ScroogeCoin/src/TxHandler.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ScroogeCoin/ScroogeCoin.iml" afterPath="$PROJECT_DIR$/ScroogeCoin/ScroogeCoin.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ScroogeCoin/src/Transaction.java" afterPath="$PROJECT_DIR$/ScroogeCoin/src/Transaction.java" />
-    </list>
+    <list default="true" id="1f50fc7c-ca71-44bf-89ee-33e9f755fc4e" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -78,12 +72,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UTXO.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UTXO.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ScroogeCoin/src/UTXO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            <state relative-caret-position="495">
+              <caret line="37" column="45" lean-forward="true" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TxHandler.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ScroogeCoin/src/TxHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="900">
+              <caret line="77" column="26" lean-forward="false" selection-start-line="77" selection-start-column="26" selection-end-line="77" selection-end-column="26" />
+              <folding>
+                <element signature="e#2700#2701#0" expanded="true" />
+                <element signature="e#2733#2734#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,7 +140,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ScroogeCoin/src/TxHandler.java" />
         <option value="$PROJECT_DIR$/ScroogeCoin/src/Text.java" />
         <option value="$PROJECT_DIR$/ScroogeCoin/src/IsVaildTest.java" />
         <option value="$PROJECT_DIR$/ScroogeCoin/src/UtxoTestSet.java" />
@@ -143,6 +149,7 @@
         <option value="$PROJECT_DIR$/ScroogeCoin/src/CompliantNode.java" />
         <option value="$PROJECT_DIR$/ScroogeCoin/src/Simulation.java" />
         <option value="$PROJECT_DIR$/ScroogeCoin/src/Transaction.java" />
+        <option value="$PROJECT_DIR$/ScroogeCoin/src/TxHandler.java" />
       </list>
     </option>
   </component>
@@ -509,7 +516,6 @@
     <entry file="file://$PROJECT_DIR$/ScroogeCoin/src/IsValidTest.java" />
     <entry file="file://$PROJECT_DIR$/ScroogeCoin/src/MaxFeeTxHandler.java" />
     <entry file="file://$PROJECT_DIR$/ScroogeCoin/src/UTXOPool.java" />
-    <entry file="file://$PROJECT_DIR$/ScroogeCoin/src/TxHandler.java" />
     <entry file="file://$PROJECT_DIR$/ScroogeCoin/src/Node.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -608,9 +614,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ScroogeCoin/src/UTXO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        <state relative-caret-position="495">
+          <caret line="37" column="45" lean-forward="true" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ScroogeCoin/src/TxHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="77" column="26" lean-forward="false" selection-start-line="77" selection-start-column="26" selection-end-line="77" selection-end-column="26" />
+          <folding>
+            <element signature="e#2700#2701#0" expanded="true" />
+            <element signature="e#2733#2734#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
