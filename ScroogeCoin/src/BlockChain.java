@@ -8,7 +8,7 @@ public class BlockChain {
     public static final int CUT_OFF_AGE = 10;
 
     //This is the hashmap of the chain of blocks. A unique identifier mapped to a list of BlockLinks
-    HashMap<ByteArrayWrapper, BlockLink> blockchain;
+    private HashMap<ByteArrayWrapper, BlockLink> blockchain;
     // this is the blocklink we're going to work on now;
     private BlockLink blockToWorkOn;
     // This is the list of transactions we're trying to shove into a block.
@@ -49,9 +49,19 @@ public class BlockChain {
      * block
      */
     public BlockChain(Block genesisBlock) {
+        // make a Hashmap blockchain object
+        blockchain = new HashMap<>();
+        // make a utxo pool object for the geniss block
         UTXOPool gPool = new UTXOPool();
-        TransactionPool txPool = new TransactionPool();
+        //make a new transaction pool
+        txPool = new TransactionPool();
+        // Make a blocklink to start linking the blocks together, intitiate with gensis block, null previous, and genesis utxo pool
         BlockLink gensisBlockLink = new BlockLink(genesisBlock, null, gPool);
+        // make a hashpointer for the first block
+        ByteArrayWrapper hashpointer_genblock = new ByteArrayWrapper(genesisBlock.getHash());
+        // add it to the blockchain
+        blockchain.put(hashpointer_genblock, gensisBlockLink);
+        // adjust to height of most recent block
         blockToWorkOn = gensisBlockLink;
     }
 
@@ -85,7 +95,7 @@ public class BlockChain {
     public boolean addBlock(Block block) {
         //get previous block link from blockchain's max height blocklink's prev block hash pointer
         // as that needs to be in the new block.
-        ByteArrayWrapper hashpointer_prev = new ByteArrayWrapper(block.getPrevBlockHash())
+        ByteArrayWrapper hashpointer_prev = new ByteArrayWrapper(block.getPrevBlockHash());
         BlockLink previousBlockLink = blockchain.get(hashpointer_prev);
         // if genesis block attempted - don't include it
         if (block.getPrevBlockHash() == null) return false;
@@ -94,7 +104,8 @@ public class BlockChain {
         if (previousBlockLink.blockheight <= (blockToWorkOn.blockheight - CUT_OFF_AGE)) return false;
         // Construct a TXHandler object, with the UTXOPool from the previous block link (their test suite will provide)
         TxHandler handler = new TxHandler(previousBlockLink.copyUtxPool());
-        // make new transaction objects from the transactions in the block provided to this function
+        // make new transaction objects from the transactions in the block provided to this function.
+        // I have no idea why the IDE suggested .toArray, but I guess it wanted to give it an array?
         Transaction[] transactions = block.getTransactions().toArray(new Transaction[0]);
         //make sure they're all valid
         Transaction[] validTxs = handler.handleTxs(transactions);
@@ -102,8 +113,13 @@ public class BlockChain {
         for (Transaction tx : validTxs){
             block.addTransaction(tx);
         }
+        //grab utxo pool from previous block via txhandler
         UTXOPool newPool = handler.getUTXOPool();
+        // add a new transaction to the block and utxo pool
+        addCoinbaseTransaction(block, newPool);
+        // new blocklink object with defined block as this one we're adding, the previous blocklink, and the new utxpool
         BlockLink newBlockLink = new BlockLink(block, previousBlockLink, newPool);
+        // the function below needs a byte array wrapper, so.. Make one from the block's hash, since we need to point at it.
         ByteArrayWrapper hashpointer_new = new ByteArrayWrapper(block.getHash());
         blockchain.put(hashpointer_new, newBlockLink);
         return true;
@@ -113,4 +129,16 @@ public class BlockChain {
     public void addTransaction(Transaction tx) {
         txPool.addTransaction(tx);
     }
+
+    //Coinbase transaction
+    public void addCoinbaseTransaction(Block block, UTXOPool uPool){
+        Transaction cb = block.getCoinbase();
+        int i = 0;
+        for (Transaction.Output txo : cb.getOutputs()){
+            UTXO utxo = new UTXO(cb.getHash(), i);
+            uPool.addUTXO(utxo, txo);
+            i++;
+        }
+    }
+
 }
